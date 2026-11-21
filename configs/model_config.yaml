@@ -1,6 +1,24 @@
-vocab_size: 8000
-embed_dim: 128
-num_heads: 4
-num_layers: 4
-context_length: 128
-dropout: 0.1
+# ---- MODEL SHAPE (the "size" of the brain) ----
+vocab_size: 8000        # SentencePiece BPE vocabulary
+dim: 640                # width of every vector inside the model (upgraded from 512)
+num_layers: 12          # 12 transformer blocks stacked (upgraded from 10)
+num_heads: 10           # attention heads (dim / heads = 64 numbers per head)
+ffn_dim: 1792           # SwiGLU FFN hidden dimension (8/3 ratio, 256-byte hardware aligned)
+context_length: 1024    # Maximum achievable context on 4GB VRAM (allows 6-10 conversation turns)
+rope_theta: 10000.0     # RoPE base number
+norm_eps: 0.00001       # RMSNorm epsilon
+dropout: 0.05           # Dropout probability for SFT generalization
+
+# ---- TRAINING SETTINGS ----
+batch_size: 1           # micro-batch size (B=1 prevents Windows VRAM paging at ctx 1024)
+grad_accum: 32          # effective batch size = 1 * 32 = 32 sequences
+pretrain_lr: 0.0005     # peak pretrain learning rate
+sft_lr: 0.00015         # gentle SFT learning rate (prevents catastrophic forgetting)
+min_lr_ratio: 0.1       # LR ends at 10% of peak
+warmup_steps: 300
+weight_decay: 0.1
+grad_clip: 1.0
+pretrain_epochs: 10     # deep pretraining over 27M tokens (~270M tokens processed)
+sft_epochs: 3           # gentle alignment (NOT 8 epochs)
+eval_every: 250
+save_every: 500

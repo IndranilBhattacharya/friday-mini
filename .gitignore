@@ -1,0 +1,39 @@
+# Environments
+.venv/
+.venv-gguf/
+venv/
+env/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Model checkpoints & large binaries
+checkpoints/
+*.pt
+*.bin
+*.safetensors
+*.gguf
+
+# Large Data & Exports (stored on Hugging Face / generated locally)
+data/
+export/
+
+# Cloned third-party repositories & conversion tools
+llama.cpp/
+tools/
+
+# Logs & Temporary files
+*.log
+*.tmp
+*.err
+complete_log.log
+
+# Operating System & IDE artifacts
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

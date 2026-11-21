@@ -1,0 +1,11 @@
+# torch is installed separately (CUDA build), see PLAN.md step 0
+sentencepiece
+pyyaml
+requests
+numpy
+matplotlib
+safetensors
+transformers   # ONLY used in tests to cross-check our hand-written model
+nbformat
+nbconvert
+ipykernel
