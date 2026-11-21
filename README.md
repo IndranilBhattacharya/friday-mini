@@ -3,7 +3,7 @@
 A ~66M-parameter Marvel domain Small Language Model (SLM), written from scratch in PyTorch to learn how LLMs work.
 Hand-written: attention, RoPE, RMSNorm, SwiGLU, dropout, softmax, cross-entropy, AdamW, cosine LR schedule, multi-turn loss masking, sampling, toy BPE.
 
-**Read `PLAN.md` first** (full plan, status, how to continue). Quick start:
+## Quick Start
 
 ```
 .venv\Scripts\python -m pytest tests -q          # prove the math is right

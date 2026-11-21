@@ -37,3 +37,6 @@ complete_log.log
 Thumbs.db
 .vscode/
 .idea/
+
+# Internal notes & documentation (local only, never committed to public repo)
+local_notes/
