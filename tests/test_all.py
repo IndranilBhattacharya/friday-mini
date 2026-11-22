@@ -102,3 +102,22 @@ def test_matches_huggingface_llama(tmp_path):
 def test_bpe_toy():
     merges = train_bpe("low low low lower lowest", 3)
     assert encode_word("low", merges) == ["low"]
+
+
+def test_chat_multiturn():
+    from src.tokenization.tokenizer import Tok
+    tok = Tok()
+    msgs = [
+        {"role": "user", "content": "Who is Thor?"},
+        {"role": "assistant", "content": "Thor is the God of Thunder."},
+        {"role": "user", "content": "What is his weapon?"},
+        {"role": "assistant", "content": "He wields the enchanted hammer Mjolnir."}
+    ]
+    ids, labels = tok.chat_multiturn(msgs)
+    assert len(ids) == len(labels)
+    assert labels[0] == -100
+    assert labels[-1] == tok.eos
+    unmasked = [ids[i] for i in range(len(ids)) if labels[i] != -100]
+    assert len(unmasked) > 0
+    assert tok.eos in unmasked
+

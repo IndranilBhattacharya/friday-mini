@@ -49,14 +49,14 @@ class Tok:
         """
         ids = [self.bos]
         labels = [-100]
-        for m in messages:
-            role, text = m["role"], m["content"].strip()
-            if role == "user":
-                p = self.encode(self.prompt_text(text))
-                ids += p
-                labels += [-100] * len(p)
-            elif role == "assistant":
-                a = self.encode(" " + text) + [self.eos]
-                ids += a
-                labels += a
+        for i in range(0, len(messages), 2):
+            u_text = messages[i]["content"].strip()
+            a_text = messages[i + 1]["content"].strip() if i + 1 < len(messages) else ""
+            p = self.encode(self.prompt_text(u_text))
+            full = self.encode(self.prompt_text(u_text) + " " + a_text)
+            if full[:len(p)] != p:
+                full = p + self.encode(" " + a_text)
+            ans_ids = full[len(p):] + [self.eos]
+            ids += p + ans_ids
+            labels += [-100] * len(p) + ans_ids
         return ids, labels
